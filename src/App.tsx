@@ -6,8 +6,7 @@ import Landing from './components/Landing';
 import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
 import Login from './components/Login';
-import Signup from './components/Signup';
-import { SignatureKind } from 'typescript';
+import Signup from "./components/Signup";
 
 function App() {
   return (
@@ -19,11 +18,7 @@ function App() {
         <Route path="bug-tracker/profile" element={<Profile />} />
         <Route path="bug-tracker/signup" element={<Signup />} />
         <Route path="bug-tracker/login" element={<Login />} />
-      </Routes>
-
-      
-      
-      
+      </Routes>     
     </Container>
   );
 }
