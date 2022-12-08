@@ -10,6 +10,7 @@ import Signup from "./components/Signup";
 import { createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "./firebaseConfig"
 import { useState, useEffect, FormEvent } from "react"
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 
@@ -73,8 +74,10 @@ function App() {
       <NavComponent logUserOut={logUserOut} user={user}/>
       <Routes>
         <Route index path="bug-tracker/" element={<Landing />} />
-        <Route path="bug-tracker/dashboard" element={<Dashboard />} />
-        <Route path="bug-tracker/profile" element={<Profile />} />
+        <Route element={<PrivateRoute user={user} />}>
+          <Route path="bug-tracker/dashboard" element={<Dashboard />} />
+          <Route path="bug-tracker/profile" element={<Profile />} />
+        </Route>
         <Route path="bug-tracker/signup" element={<Signup signUpUser={signUpUser} />} />
         <Route path="bug-tracker/login" element={<Login logUserIn={logUserIn}/>} />
       </Routes>     
