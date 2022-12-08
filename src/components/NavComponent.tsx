@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom"
 
-const NavComponent = ({ logUserOut } : any) => {
+const NavComponent = ({ logUserOut, user } : any) => {
   return (
     <Navbar bg="dark" expand="lg">
     <Container>
@@ -16,6 +16,7 @@ const NavComponent = ({ logUserOut } : any) => {
           <Nav.Item>
             <Nav.Link onClick={logUserOut}>Log Out</Nav.Link>
           </Nav.Item>
+          <Navbar.Text>{user ? `Logged in as ${user.email}` : null}</Navbar.Text>
         </Nav>
       </Navbar.Collapse>
     </Container>

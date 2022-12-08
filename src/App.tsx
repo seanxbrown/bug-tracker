@@ -7,18 +7,21 @@ import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
 import Login from './components/Login';
 import Signup from "./components/Signup";
-import { createUserWithEmailAndPassword, signOut } from "firebase/auth"
+import { createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "./firebaseConfig"
+import { useState, useEffect, FormEvent } from "react"
 
 function App() {
 
-  async function signUpUser(e: any) {
+  const [user, setUser] = useState({});
+
+  async function signUpUser(e: FormEvent) {
     e.preventDefault();
 
-    const userEmail = (document.getElementById("userEmail") as HTMLInputElement).value
-    const userPassword = (document.getElementById("userPassword") as HTMLInputElement).value
-    const userPassConf = (document.getElementById("userPassConf") as HTMLInputElement).value
-    const userRole = (document.getElementById("userRole") as HTMLInputElement).value
+    const userEmail: string = (document.getElementById("userEmail") as HTMLInputElement).value
+    const userPassword: string = (document.getElementById("userPassword") as HTMLInputElement).value
+    const userPassConf: string = (document.getElementById("userPassConf") as HTMLInputElement).value
+    const userRole: string = (document.getElementById("userRole") as HTMLInputElement).value
 
     if (userPassword !== userPassConf) {
       return
@@ -42,17 +45,38 @@ function App() {
     }
   }
 
+  async function logUserIn(e: FormEvent) {
+    e.preventDefault();
 
+    const userEmail: string = (document.getElementById("loginEmail") as HTMLInputElement).value
+    const userPassword: string = (document.getElementById("loginPassword") as HTMLInputElement).value
+
+    try {
+      await signInWithEmailAndPassword(auth, userEmail, userPassword)
+      console.log("logged in")
+    } catch(e) {
+      console.log(e)
+    }
+
+  }
+
+  useEffect(() => {
+    onAuthStateChanged(auth, userData => {
+      const currentUser = userData as any
+      setUser(currentUser)
+    })
+  })
   
+
   return (
     <Container fluid className="App">
-      <NavComponent logUserOut={logUserOut}/>
+      <NavComponent logUserOut={logUserOut} user={user}/>
       <Routes>
         <Route index path="bug-tracker/" element={<Landing />} />
         <Route path="bug-tracker/dashboard" element={<Dashboard />} />
         <Route path="bug-tracker/profile" element={<Profile />} />
         <Route path="bug-tracker/signup" element={<Signup signUpUser={signUpUser} />} />
-        <Route path="bug-tracker/login" element={<Login />} />
+        <Route path="bug-tracker/login" element={<Login logUserIn={logUserIn}/>} />
       </Routes>     
     </Container>
   );
