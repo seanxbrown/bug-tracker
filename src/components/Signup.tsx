@@ -2,26 +2,26 @@ import React from 'react'
 import { Container, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom"
 
-const Signup = () => {
+const Signup = ( { signUpUser }: any) => {
   return (
     <Container>
-      <Form className="border border-1 border-secondary mt-5 p-4">
+      <Form className="border border-1 border-secondary mt-5 p-4" onSubmit={signUpUser}>
         <h2 className="text-center">Sign Up</h2>
-        <Form.Group controlId="signupEmail">
+        <Form.Group>
           <Form.Label>Email Address </Form.Label>
-            <Form.Control type="email" />
+            <Form.Control type="email" id="userEmail"/>
         </Form.Group>
-        <Form.Group controlId="signupPassword">
+        <Form.Group>
           <Form.Label>Password </Form.Label>
-            <Form.Control type="password" />
+            <Form.Control type="password" id="userPassword"/>
         </Form.Group>
-        <Form.Group controlId="signupPasswordConf">
+        <Form.Group>
           <Form.Label>Confirm Password </Form.Label>
-            <Form.Control type="password" />
+            <Form.Control type="password" id="userPassConf"/>
         </Form.Group>
-        <Form.Group controlId="signupRole">
+        <Form.Group >
           <Form.Label>Role / Function</Form.Label>
-          <Form.Control type="text" />
+          <Form.Control type="text" id="userRole"/>
         </Form.Group>
         <Button type="submit" className="btn btn-primary mt-3">Create Account</Button>
         <p className="text-center">Already have an account? <Link to="/bug-tracker/login">Log in</Link></p>

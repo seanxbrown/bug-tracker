@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom"
 
-const NavComponent = () => {
+const NavComponent = ({ logUserOut } : any) => {
   return (
     <Navbar bg="dark" expand="lg">
     <Container>
@@ -14,7 +14,7 @@ const NavComponent = () => {
           <Link to="/bug-tracker/dashboard" className="nav-link">Dashboard</Link>
           <Link to="/bug-tracker/profile" className="nav-link">Profile</Link>
           <Nav.Item>
-            <Nav.Link>Log Out</Nav.Link>
+            <Nav.Link onClick={logUserOut}>Log Out</Nav.Link>
           </Nav.Item>
         </Nav>
       </Navbar.Collapse>
