@@ -19,10 +19,16 @@ const Signup = ( { signUpUser }: any) => {
           <Form.Label>Confirm Password </Form.Label>
             <Form.Control type="password" id="userPassConf"/>
         </Form.Group>
-        <Form.Group >
-          <Form.Label>Role / Function</Form.Label>
-          <Form.Control type="text" id="userRole"/>
+        <Form.Group>
+          <Form.Label>Select a role</Form.Label>
+          <Form.Select aria-label="Choose a business role" id="userRole">
+          <option value="user">User</option>
+          <option value="developer">Developer</option>
+          <option value="projectManager">Project Manager</option>
+          <option value="administrator">Administrator</option>
+          </Form.Select>
         </Form.Group>
+  
         <Button type="submit" className="btn btn-primary mt-3">Create Account</Button>
         <p className="text-center">Already have an account? <Link to="/bug-tracker/login">Log in</Link></p>
       </Form>
