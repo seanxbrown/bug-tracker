@@ -1,7 +1,7 @@
 import './App.css';
 import { Container } from "react-bootstrap"
 import NavComponent from './components/NavComponent';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Landing from './components/Landing';
 import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
@@ -15,6 +15,7 @@ import PrivateRoute from './components/PrivateRoute';
 function App() {
 
   const [user, setUser] = useState({});
+  const navigate = useNavigate()
 
   async function signUpUser(e: FormEvent) {
     e.preventDefault();
@@ -29,8 +30,9 @@ function App() {
     }
 
     try {
-     await createUserWithEmailAndPassword(auth, userEmail, userPassword )
-     console.log("signed in")
+     await createUserWithEmailAndPassword(auth, userEmail, userPassword );
+     navigate("/bug-tracker/dashboard")
+
     } catch(error) {
       alert(error)
     }
@@ -40,7 +42,8 @@ function App() {
   async function logUserOut() {
     try {
       await signOut(auth)
-      console.log("signed out")
+      navigate("/bug-tracker")
+
     } catch(error) {
       alert(error)
     }
@@ -54,7 +57,7 @@ function App() {
 
     try {
       await signInWithEmailAndPassword(auth, userEmail, userPassword)
-      console.log("logged in")
+      navigate("/bug-tracker/dashboard")
     } catch(e) {
       console.log(e)
     }
