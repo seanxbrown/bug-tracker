@@ -8,18 +8,21 @@ import Profile from './components/Profile';
 import Login from './components/Login';
 import Signup from "./components/Signup";
 import { createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth"
-import { auth } from "./firebaseConfig"
+import { auth, db } from "./firebaseConfig"
 import { useState, useEffect, FormEvent } from "react"
 import PrivateRoute from './components/PrivateRoute';
+import User from "./User"
+import { doc, setDoc } from "firebase/firestore"
 
 function App() {
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<Object>({});
   const navigate = useNavigate()
 
   async function signUpUser(e: FormEvent) {
     e.preventDefault();
 
+    const userName: string = (document.getElementById("userName") as HTMLInputElement).value
     const userEmail: string = (document.getElementById("userEmail") as HTMLInputElement).value
     const userPassword: string = (document.getElementById("userPassword") as HTMLInputElement).value
     const userPassConf: string = (document.getElementById("userPassConf") as HTMLInputElement).value
@@ -29,16 +32,22 @@ function App() {
       return
     }
 
+    //Create a user account for authorisation and store user details in database to reference elsewhere
+
     try {
-     await createUserWithEmailAndPassword(auth, userEmail, userPassword );
-     navigate("/bug-tracker/dashboard")
+      const userAccount = await createUserWithEmailAndPassword(auth, userEmail, userPassword);
+      console.log(userAccount.user.uid)
+      const newUser = new User(userName, userEmail, userRole, []);
+      await setDoc(doc(db, "users", userAccount.user.uid), {...newUser});
 
     } catch(error) {
       alert(error)
     }
+      navigate("/bug-tracker/dashboard")
+
 
   }
-  
+
   async function logUserOut() {
     try {
       await signOut(auth)
@@ -59,7 +68,6 @@ function App() {
       await signInWithEmailAndPassword(auth, userEmail, userPassword)
       navigate("/bug-tracker/dashboard")
     } catch(e) {
-      console.log(e)
     }
 
   }

@@ -8,6 +8,10 @@ const Signup = ( { signUpUser }: any) => {
       <Form className="border border-1 border-secondary mt-5 p-4" onSubmit={signUpUser}>
         <h2 className="text-center">Sign Up</h2>
         <Form.Group>
+          <Form.Label>Name</Form.Label>
+            <Form.Control type="name" id="userName"/>
+        </Form.Group>
+        <Form.Group>
           <Form.Label>Email Address </Form.Label>
             <Form.Control type="email" id="userEmail"/>
         </Form.Group>
