@@ -37,7 +37,7 @@ function App() {
     try {
       const userAccount = await createUserWithEmailAndPassword(auth, userEmail, userPassword);
       console.log(userAccount.user.uid)
-      const newUser = new User(userName, userEmail, userRole, []);
+      const newUser = new User(userName, userEmail, userRole);
       await setDoc(doc(db, "users", userAccount.user.uid), {...newUser});
 
     } catch(error) {
