@@ -12,7 +12,7 @@ import { auth, db } from "./firebaseConfig"
 import { useState, useEffect, FormEvent } from "react"
 import PrivateRoute from './components/PrivateRoute';
 import User from "./User"
-import { doc, setDoc } from "firebase/firestore"
+import { doc, setDoc, getDoc } from "firebase/firestore"
 
 function App() {
 
@@ -37,7 +37,7 @@ function App() {
     try {
       const userAccount = await createUserWithEmailAndPassword(auth, userEmail, userPassword);
       console.log(userAccount.user.uid)
-      const newUser = new User(userName, userEmail, userRole);
+      const newUser = new User(userName, userEmail, userRole, userAccount.user.uid);
       await setDoc(doc(db, "users", userAccount.user.uid), {...newUser});
 
     } catch(error) {
@@ -72,12 +72,47 @@ function App() {
 
   }
 
+  async function getUserInfoFromDB() {
+    const currentUser = {...user}
+    return currentUser
+    //const docRef = doc(db, "users", currentUser.uid);
+    //const docSnap = await getDoc(docRef)
+
+  }
+
   useEffect(() => {
     onAuthStateChanged(auth, userData => {
       const currentUser = userData as any
       setUser(currentUser)
+      if(currentUser) {createUserObject(currentUser.uid)}
+
     })
-  })
+
+    async function createUserObject(userID: string) {
+      const docRef = await doc(db, "users", userID);
+      const docSnap = await getDoc(docRef)
+      const userData = await docSnap.data()
+      if (userData) {console.log("docsnap", userData)}
+
+      const newUserObj: any = {...user}
+      if (userData) {
+      newUserObj.name = userData.name
+      newUserObj.email = userData.email
+      newUserObj.projects = userData.projects
+      newUserObj.role = userData.role
+      newUserObj.ticketsAssigned = userData.ticketsAssigned
+      newUserObj.ticketsCreated = userData.ticketsCreated
+      console.log(newUserObj)
+      setUser(newUserObj)
+
+
+      }
+      
+
+      
+    }
+  
+  }, [])
   
 
   return (
