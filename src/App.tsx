@@ -121,8 +121,8 @@ function App() {
       <Routes>
         <Route index path="bug-tracker/" element={<Landing />} />
         <Route element={<PrivateRoute user={user} />}>
-          <Route path="bug-tracker/dashboard" element={<Dashboard />} />
-          <Route path="bug-tracker/profile" element={<Profile />} />
+          <Route path="bug-tracker/dashboard" element={<Dashboard user={user}/>} />
+          <Route path="bug-tracker/profile" element={<Profile user={user}/>} />
         </Route>
         <Route path="bug-tracker/signup" element={<Signup signUpUser={signUpUser} />} />
         <Route path="bug-tracker/login" element={<Login logUserIn={logUserIn}/>} />

@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid"
 import { doc, setDoc } from "firebase/firestore"
 import { db } from "../firebaseConfig"
 
-const Dashboard = () => {
+const Dashboard = ({ user }: any) => {
 
   const [creatingProject, setCreatingProject] = useState(false);
 
