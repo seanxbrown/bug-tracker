@@ -12,7 +12,7 @@ import { auth, db } from "./firebaseConfig"
 import { useState, useEffect, FormEvent } from "react"
 import PrivateRoute from './components/PrivateRoute';
 import User from "./User"
-import { doc, setDoc, getDoc } from "firebase/firestore"
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 function App() {
 

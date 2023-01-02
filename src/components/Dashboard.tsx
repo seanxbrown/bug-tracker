@@ -6,11 +6,14 @@ import { format } from "date-fns";
 import Project from "../Project";
 import { v4 as uuidv4 } from "uuid"
 import { doc, setDoc, collection, query, where, getDocs } from "firebase/firestore"
-import { db } from "../firebaseConfig"
+import { db } from "../firebaseConfig";
+import CreateTicket from "./CreateTicket"
+
 
 const Dashboard = ({ user }: any) => {
 
   const [creatingProject, setCreatingProject] = useState(false);
+  const [creatingTicket, setCreatingTicket] = useState(false);
   const [projects, setProjects] = useState<Array<IProject>>([]);
 
   interface IProject {
@@ -26,6 +29,13 @@ const Dashboard = ({ user }: any) => {
 
   function openNewProjectDiv() {
     setCreatingProject(true);
+    setCreatingTicket(false)
+  }
+
+  function openNewTicketDiv() {
+    setCreatingTicket(true);
+    setCreatingProject(false);
+
   }
 
   async function createNewProject(e: FormEvent) {
@@ -69,16 +79,17 @@ const Dashboard = ({ user }: any) => {
     <Container>
       <h2>Dashboard</h2>
       {creatingProject && <CreateProject createNewProject={createNewProject}/>}
+      {creatingTicket && <CreateTicket createNewProject={createNewProject}/>}
       <Container id="dashboardTicketContainer">
         <h3>New Tickets</h3>
         <div>New Tickets to be displayed here</div>
-        <Link to="#">View all tickets</Link>
+        <Button type="button" className="btn btn-primary" onClick={openNewTicketDiv}>Create Ticket</Button>
+
       </Container>
       <Container id="dashboardProjectContainer">
         <h3>Projects</h3>
         <Button type="button" className="btn btn-primary" onClick={openNewProjectDiv}>Create Project</Button>
         {projects && projects.map(project => <p>{project.name}</p>)}
-        <Link to="#">View all projects</Link>
       </Container>
       
     </Container>
