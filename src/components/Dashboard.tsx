@@ -1,16 +1,28 @@
-import { FormEvent, useState} from 'react'
+import { FormEvent, useState, useEffect } from 'react'
 import { Container, Button } from "react-bootstrap"
 import { Link } from "react-router-dom";
 import CreateProject from "./CreateProject"
 import { format } from "date-fns";
 import Project from "../Project";
 import { v4 as uuidv4 } from "uuid"
-import { doc, setDoc } from "firebase/firestore"
+import { doc, setDoc, collection, query, where, getDocs } from "firebase/firestore"
 import { db } from "../firebaseConfig"
 
 const Dashboard = ({ user }: any) => {
 
   const [creatingProject, setCreatingProject] = useState(false);
+  const [projects, setProjects] = useState<Array<IProject>>([]);
+
+  interface IProject {
+    name: string;
+    description: string;
+    owner: string;
+    assignedUsers: Array<string>;
+    assignedTickets: Array<string>;
+    createdDate: string;
+    id: string
+  }
+
 
   function openNewProjectDiv() {
     setCreatingProject(true);
@@ -33,11 +45,25 @@ const Dashboard = ({ user }: any) => {
       alert(error)
     }
  
-
-
-
-
   }
+
+  useEffect(()=> {
+
+    //Admin user - get all projects
+    async function getAllProjects() {
+
+      const querySnapshot = await getDocs(collection(db, "projects"))
+      const downloadedProjects: Array<IProject> = []
+      querySnapshot.forEach(project =>
+        downloadedProjects.push(project.data() as IProject)
+        )
+        setProjects(downloadedProjects)
+
+    }
+
+    getAllProjects()
+
+  }, [])
 
   return (
     <Container>
@@ -51,7 +77,7 @@ const Dashboard = ({ user }: any) => {
       <Container id="dashboardProjectContainer">
         <h3>Projects</h3>
         <Button type="button" className="btn btn-primary" onClick={openNewProjectDiv}>Create Project</Button>
-        <div>Projects to be displayed here</div>
+        {projects && projects.map(project => <p>{project.name}</p>)}
         <Link to="#">View all projects</Link>
       </Container>
       

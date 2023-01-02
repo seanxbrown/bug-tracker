@@ -92,7 +92,7 @@ function App() {
       const docRef = await doc(db, "users", userID);
       const docSnap = await getDoc(docRef)
       const userData = await docSnap.data()
-      if (userData) {console.log("docsnap", userData)}
+     // if (userData) {console.log("docsnap", userData)}
 
       const newUserObj: any = {...user}
       if (userData) {
@@ -102,7 +102,6 @@ function App() {
       newUserObj.role = userData.role
       newUserObj.ticketsAssigned = userData.ticketsAssigned
       newUserObj.ticketsCreated = userData.ticketsCreated
-      console.log(newUserObj)
       setUser(newUserObj)
 
 
