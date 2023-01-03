@@ -21,7 +21,7 @@ const CreateTicket = ({ createNewProject, projects }: any) => {
           <Form.Select>
             <option value="bug">Add Dynamic Projects here</option>
             {projects.map((project: IProject) => {
-              return <option value={project.name}>{project.name}</option>
+              return <option value={project.id}>{project.name}</option>
             })}
           </Form.Select>
         </Form.Group>       
