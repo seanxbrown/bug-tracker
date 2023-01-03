@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid"
 import { doc, setDoc, collection, query, where, getDocs } from "firebase/firestore"
 import { db } from "../firebaseConfig";
 import CreateTicket from "./CreateTicket"
+import { IProject } from '../ts/interfaces/interfaces';
 
 
 const Dashboard = ({ user }: any) => {
@@ -15,17 +16,6 @@ const Dashboard = ({ user }: any) => {
   const [creatingProject, setCreatingProject] = useState(false);
   const [creatingTicket, setCreatingTicket] = useState(false);
   const [projects, setProjects] = useState<Array<IProject>>([]);
-
-  interface IProject {
-    name: string;
-    description: string;
-    owner: string;
-    assignedUsers: Array<string>;
-    assignedTickets: Array<string>;
-    createdDate: string;
-    id: string
-  }
-
 
   function openNewProjectDiv() {
     setCreatingProject(true);
@@ -79,7 +69,7 @@ const Dashboard = ({ user }: any) => {
     <Container>
       <h2>Dashboard</h2>
       {creatingProject && <CreateProject createNewProject={createNewProject}/>}
-      {creatingTicket && <CreateTicket createNewProject={createNewProject}/>}
+      {creatingTicket && <CreateTicket projects={projects} createNewProject={createNewProject}/>}
       <Container id="dashboardTicketContainer">
         <h3>New Tickets</h3>
         <div>New Tickets to be displayed here</div>

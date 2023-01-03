@@ -1,7 +1,10 @@
 import React from 'react'
 import { Form, Container, Button } from "react-bootstrap"
+import { IProject, ITicket } from '../ts/interfaces/interfaces'
 
-const CreateTicket = ({ createNewProject }: any) => {
+const CreateTicket = ({ createNewProject, projects }: any) => {
+
+  //2nd Jan todo: Create ticket class, add user details to this component
   return (
     <Form className="border border-2 border-secondary p-5" onSubmit={createNewProject}>
         <h2>Create New Ticket</h2>
@@ -17,6 +20,9 @@ const CreateTicket = ({ createNewProject }: any) => {
           <Form.Label>Project</Form.Label>
           <Form.Select>
             <option value="bug">Add Dynamic Projects here</option>
+            {projects.map((project: IProject) => {
+              return <option value={project.name}>{project.name}</option>
+            })}
           </Form.Select>
         </Form.Group>       
         <Form.Group>
