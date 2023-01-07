@@ -11,11 +11,13 @@ export interface IProject {
 
 
   export interface ITicket {
-    name: string;
+    title: string;
     description: string;
     owner: string;
     assignedUsers: Array<string>;
-    assignedTickets: Array<string>;
+    type: string;
+    priority: string;
+    status: string;
     createdDate: string;
     id: string
   }

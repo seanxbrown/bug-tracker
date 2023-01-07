@@ -4,7 +4,7 @@ import { IProject, ITicket } from '../ts/interfaces/interfaces'
 
 const CreateTicket = ({ createNewProject, projects }: any) => {
 
-  //2nd Jan todo: Create ticket class, add user details to this component
+  //3rd Jan todo: Create function to create ticket, add user details to this component
   return (
     <Form className="border border-2 border-secondary p-5" onSubmit={createNewProject}>
         <h2>Create New Ticket</h2>
