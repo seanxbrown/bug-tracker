@@ -1,7 +1,7 @@
 class Ticket {
     title: string;
     description: string;
-    owner: string;
+    submitter: string;
     assignedUsers: Array<string>;
     type: string;
     priority: string;
@@ -9,10 +9,10 @@ class Ticket {
     createdDate: string;
     id: string
 
-    constructor(title: string, owner: string, description: string, type: string, priority: string, createdDate: string, id: string) {
+    constructor(title: string, submitter: string, description: string, type: string, priority: string, createdDate: string, id: string) {
         this.title = title;
         this.description = description;
-        this.owner = owner;
+        this.submitter = submitter;
         this.assignedUsers = [];
         this.type = type;
         this.priority = priority;

@@ -10,16 +10,16 @@ const CreateTicket = ({ createNewProject, projects }: any) => {
         <h2>Create New Ticket</h2>
         <Form.Group>
             <Form.Label>Title</Form.Label>
-            <Form.Control type="text" maxLength={20} id="projectName"/>
+            <Form.Control type="text" maxLength={20} id="ticketTitle"/>
         </Form.Group>
         <Form.Group>
             <Form.Label>Description</Form.Label>
-            <Form.Control type="text" maxLength={150} id="projectOwner"/>
+            <Form.Control type="text" maxLength={150} id="ticketDescription"/>
         </Form.Group>
         <Form.Group>
           <Form.Label>Project</Form.Label>
-          <Form.Select>
-            <option value="bug">Add Dynamic Projects here</option>
+          <Form.Select id="projectID">
+            <option value="placeholder">Add Dynamic Projects here</option>
             {projects.map((project: IProject) => {
               return <option value={project.id}>{project.name}</option>
             })}
@@ -27,7 +27,7 @@ const CreateTicket = ({ createNewProject, projects }: any) => {
         </Form.Group>       
         <Form.Group>
           <Form.Label>Ticket Type</Form.Label>
-          <Form.Select>
+          <Form.Select id="ticketType">
             <option value="bug">Bug Report</option>
             <option value="service">Service Request</option>
             <option value="enhancement">Enhancement Request</option>
@@ -35,7 +35,7 @@ const CreateTicket = ({ createNewProject, projects }: any) => {
         </Form.Group>
         <Form.Group>
           <Form.Label>Priority</Form.Label>
-          <Form.Select>
+          <Form.Select id="ticketPriority">
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>

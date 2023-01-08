@@ -47,6 +47,29 @@ const Dashboard = ({ user }: any) => {
  
   }
 
+  async function createNewTicket(e: FormEvent) {
+    e.preventDefault();
+
+    const ticketTitle: string = (document.getElementById("ticketTitle") as HTMLInputElement).value
+    const ticketDescription: string = (document.getElementById("ticketDescription") as HTMLInputElement).value
+    const projectID: string = (document.getElementById("projectID") as HTMLInputElement).value;
+    const ticketType: string = (document.getElementById("ticketType") as HTMLInputElement).value;
+    const ticketPriority: string = (document.getElementById("ticketPriority") as HTMLInputElement).value;
+    const createdDate: string = format(Date.now(), "dd/MM/yyyy");
+    const submitter = user.email
+
+    //7th Jan todo, add function to createticket component. Test. Create upload function.
+
+    /*try {
+      await setDoc(doc(db, "projects", projectId), {...newProject})
+      setCreatingProject(false)
+    } catch(error) {
+      alert(error)
+    }
+ */
+  }
+
+
   useEffect(()=> {
 
     //Admin user - get all projects
