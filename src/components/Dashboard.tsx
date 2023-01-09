@@ -17,6 +17,7 @@ const Dashboard = ({ user }: any) => {
   const [creatingProject, setCreatingProject] = useState(false);
   const [creatingTicket, setCreatingTicket] = useState(false);
   const [projects, setProjects] = useState<Array<IProject>>([]);
+  const [tickets, setTickets] = useState<Array<ITicket>>([])
 
   function openNewProjectDiv() {
     setCreatingProject(true);
@@ -76,35 +77,40 @@ const Dashboard = ({ user }: any) => {
     }
     setCreatingTicket(false)
 
+  }
 
+  async function getAllProjects() {
 
-    //7th Jan todo, add function to createticket component. Test. Create upload function.
+    const querySnapshot = await getDocs(collection(db, "projects"))
+    const downloadedProjects: Array<IProject> = []
+    querySnapshot.forEach(project =>
+      downloadedProjects.push(project.data() as IProject)
+      )
+      setProjects(downloadedProjects)
 
-    /*try {
-      await setDoc(doc(db, "projects", projectId), {...newProject})
-      setCreatingProject(false)
-    } catch(error) {
-      alert(error)
+  }
+
+  function getAllTickets(){
+    if(projects.length > 0) {
+      const newTickets: Array<any> = [];
+      //Big O here is On2. Is there a way to reduce that?
+      for (let project of projects) {
+        project.assignedTickets.forEach(ticket => newTickets.push(ticket))
+        
+      }
+      setTickets(newTickets)
+
     }
- */
+
   }
 
 
   useEffect(()=> {
 
     //Admin user - get all projects
-    async function getAllProjects() {
-
-      const querySnapshot = await getDocs(collection(db, "projects"))
-      const downloadedProjects: Array<IProject> = []
-      querySnapshot.forEach(project =>
-        downloadedProjects.push(project.data() as IProject)
-        )
-        setProjects(downloadedProjects)
-
-    }
 
     getAllProjects()
+    getAllTickets()
 
   }, [])
 
