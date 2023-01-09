@@ -5,10 +5,11 @@ import CreateProject from "./CreateProject"
 import { format } from "date-fns";
 import Project from "../Project";
 import { v4 as uuidv4 } from "uuid"
-import { doc, setDoc, collection, query, where, getDocs } from "firebase/firestore"
+import { doc, setDoc, collection, query, where, getDocs, updateDoc, arrayUnion } from "firebase/firestore"
 import { db } from "../firebaseConfig";
 import CreateTicket from "./CreateTicket"
-import { IProject } from '../ts/interfaces/interfaces';
+import { IProject, ITicket } from '../ts/interfaces/interfaces';
+import Ticket from "../Ticket"
 
 
 const Dashboard = ({ user }: any) => {
@@ -56,7 +57,26 @@ const Dashboard = ({ user }: any) => {
     const ticketType: string = (document.getElementById("ticketType") as HTMLInputElement).value;
     const ticketPriority: string = (document.getElementById("ticketPriority") as HTMLInputElement).value;
     const createdDate: string = format(Date.now(), "dd/MM/yyyy");
-    const submitter = user.email
+    const submitter = user.email;
+    const ticketID: string = uuidv4()
+
+    const newTicket = new Ticket(ticketTitle, ticketDescription, ticketType, ticketPriority, submitter, createdDate, ticketID);
+    console.log(newTicket)
+    console.log(projectID)
+
+    const projectRef = doc(db, "projects", projectID);
+
+    try {
+      await updateDoc(projectRef, {
+        assignedTickets: arrayUnion({...newTicket})
+      }
+      )
+    } catch(e) {
+      alert(e)
+    }
+    setCreatingTicket(false)
+
+
 
     //7th Jan todo, add function to createticket component. Test. Create upload function.
 
@@ -92,7 +112,7 @@ const Dashboard = ({ user }: any) => {
     <Container>
       <h2>Dashboard</h2>
       {creatingProject && <CreateProject createNewProject={createNewProject}/>}
-      {creatingTicket && <CreateTicket projects={projects} createNewProject={createNewProject}/>}
+      {creatingTicket && <CreateTicket projects={projects} createNewTicket={createNewTicket}/>}
       <Container id="dashboardTicketContainer">
         <h3>New Tickets</h3>
         <div>New Tickets to be displayed here</div>

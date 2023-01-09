@@ -2,11 +2,11 @@ import React from 'react'
 import { Form, Container, Button } from "react-bootstrap"
 import { IProject, ITicket } from '../ts/interfaces/interfaces'
 
-const CreateTicket = ({ createNewProject, projects }: any) => {
+const CreateTicket = ({ createNewTicket, projects }: any) => {
 
   //3rd Jan todo: Create function to create ticket, add user details to this component
   return (
-    <Form className="border border-2 border-secondary p-5" onSubmit={createNewProject}>
+    <Form className="border border-2 border-secondary p-5" onSubmit={createNewTicket}>
         <h2>Create New Ticket</h2>
         <Form.Group>
             <Form.Label>Title</Form.Label>

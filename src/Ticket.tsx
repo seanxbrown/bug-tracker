@@ -9,7 +9,7 @@ class Ticket {
     createdDate: string;
     id: string
 
-    constructor(title: string, submitter: string, description: string, type: string, priority: string, createdDate: string, id: string) {
+    constructor(title: string, description: string, type: string, priority: string, submitter: string, createdDate: string, id: string) {
         this.title = title;
         this.description = description;
         this.submitter = submitter;
