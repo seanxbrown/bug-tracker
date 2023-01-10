@@ -121,7 +121,7 @@ const Dashboard = ({ user }: any) => {
       {creatingTicket && <CreateTicket projects={projects} createNewTicket={createNewTicket}/>}
       <Container id="dashboardTicketContainer">
         <h3>New Tickets</h3>
-        <div>New Tickets to be displayed here</div>
+        {tickets && tickets.map(tickets => <p>{tickets.title}</p>)}
         <Button type="button" className="btn btn-primary" onClick={openNewTicketDiv}>Create Ticket</Button>
 
       </Container>
