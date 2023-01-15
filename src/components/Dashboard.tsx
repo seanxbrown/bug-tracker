@@ -81,12 +81,20 @@ const Dashboard = ({ user }: any) => {
 
   async function getAllProjects() {
 
-    const querySnapshot = await getDocs(collection(db, "projects"))
-    const downloadedProjects: Array<IProject> = []
-    querySnapshot.forEach(project =>
-      downloadedProjects.push(project.data() as IProject)
-      )
+    try {
+      const querySnapshot = await getDocs(collection(db, "projects"))
+      const downloadedProjects: Array<IProject> = []
+      querySnapshot.forEach(project =>
+        downloadedProjects.push(project.data() as IProject)
+        )
       setProjects(downloadedProjects)
+     
+
+    } catch(e) {
+      console.log(e)
+    }
+   
+ 
 
   }
 
@@ -96,10 +104,13 @@ const Dashboard = ({ user }: any) => {
       //Big O here is On2. Is there a way to reduce that?
       for (let project of projects) {
         project.assignedTickets.forEach(ticket => newTickets.push(ticket))
-        
+        //console.log(project.assignedTickets)
       }
       setTickets(newTickets)
 
+    } else {
+      console.log(projects)
+      console.log("no projects")
     }
 
   }
@@ -110,9 +121,19 @@ const Dashboard = ({ user }: any) => {
     //Admin user - get all projects
 
     getAllProjects()
-    getAllTickets()
+    
 
   }, [])
+
+  
+  useEffect(()=> {
+
+    //Admin user - get all projects
+
+    getAllTickets()    
+
+  }, [projects])
+
 
   return (
     <Container>
