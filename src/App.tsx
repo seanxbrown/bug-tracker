@@ -13,6 +13,7 @@ import { useState, useEffect, FormEvent } from "react"
 import PrivateRoute from './components/PrivateRoute';
 import User from "./User"
 import { doc, setDoc, getDoc } from "firebase/firestore";
+import UserManagement from './components/UserManagement';
 
 function App() {
 
@@ -122,6 +123,7 @@ function App() {
         <Route element={<PrivateRoute user={user} />}>
           <Route path="bug-tracker/dashboard" element={<Dashboard user={user}/>} />
           <Route path="bug-tracker/profile" element={<Profile user={user}/>} />
+          <Route path="bug-tracker/usermanagement" element={<UserManagement user={user}/>} />
         </Route>
         <Route path="bug-tracker/signup" element={<Signup signUpUser={signUpUser} />} />
         <Route path="bug-tracker/login" element={<Login logUserIn={logUserIn}/>} />

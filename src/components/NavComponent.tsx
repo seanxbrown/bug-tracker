@@ -12,6 +12,7 @@ const NavComponent = ({ logUserOut, user } : any) => {
         <Nav className="me-auto">
           <Link to="/bug-tracker" className="nav-link">Home</Link>
           <Link to="/bug-tracker/dashboard" className="nav-link">Dashboard</Link>
+          {user && user.role === "administrator" ? <Link to="/bug-tracker/usermanagement" className="nav-link">User Management</Link> : null}
           <Link to="/bug-tracker/profile" className="nav-link">Profile</Link>
           <Nav.Item>
             <Nav.Link onClick={logUserOut}>Log Out</Nav.Link>
