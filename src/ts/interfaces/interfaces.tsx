@@ -21,3 +21,15 @@ export interface IProject {
     createdDate: string;
     id: string
   }
+
+  export interface IUser {
+    name: string;
+    email: string;
+    role: string;
+    projects: Array<string>;
+    ticketsCreated: Array<string>;
+    ticketsAssigned: Array<string>;
+    id: string;
+
+  }
+
