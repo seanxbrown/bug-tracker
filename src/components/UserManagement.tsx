@@ -7,6 +7,13 @@ import { Form, Button } from "react-bootstrap"
 const UserManagement = ({ user }: any) => {
   const [users, setUsers] = useState<Array<IUser>>([])
 
+  const userRoleObject: any = {
+    user: "User",
+    developer: "Developer",
+    projectManager: "Project Manager",
+    administrator: "Administrator"
+  }
+
   async function getAllUsers() {
     const downloadedUsers: Array<IUser> = []
     const querySnapshot = await getDocs(collection(db, "users"));
@@ -29,6 +36,7 @@ const UserManagement = ({ user }: any) => {
     await updateDoc(docRef, {
       role: newRole
     })
+    getAllUsers()
 
   }
 
@@ -58,6 +66,11 @@ const UserManagement = ({ user }: any) => {
         </Form.Group>
         <Button type="submit" className="btn btn-primary">Update Role</Button>
       </Form>
+
+      <div>
+        <h2>User List</h2>
+        {users && users.map(user => <p>{user.name}, {user.email}, {userRoleObject[user.role]}</p>)}
+      </div>
     </div>
   )
 }
