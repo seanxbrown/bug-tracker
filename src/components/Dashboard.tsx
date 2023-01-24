@@ -1,5 +1,5 @@
 import { FormEvent, useState, useEffect } from 'react'
-import { Container, Button } from "react-bootstrap"
+import { Container, Button, Row, Col } from "react-bootstrap"
 import { Link } from "react-router-dom";
 import CreateProject from "./CreateProject"
 import { format } from "date-fns";
@@ -149,7 +149,15 @@ const Dashboard = ({ user }: any) => {
       <Container id="dashboardProjectContainer">
         <h3>Projects</h3>
         <Button type="button" className="btn btn-primary" onClick={openNewProjectDiv}>Create Project</Button>
-        {projects && projects.map(project => <p>{project.name}</p>)}
+        {projects && projects.map(project => 
+          <Row lg={12} id={project.id}>
+            <Col><p>{project.createdDate}</p> </Col>
+            <Col><p>{project.name}</p> </Col>
+            <Col><p>{project.description}</p> </Col>
+            <Col><p>Detail</p> </Col>
+            <Col><p>Assign User</p> </Col>
+          </Row>
+          )}
       </Container>
       
     </Container>
